@@ -17,7 +17,7 @@ wrong_answers = 0
 for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction'):
     for i in range(len(filenames)):
         print(filenames[i])
-        test_image = image.load_img(path='./dataSet/single_prediction/' + filenames[i], target_size=(64, 64))
+        test_image = image.load_img(path='./dataSet/single_prediction/' + filenames[i], target_size=(128, 128))
         test_image = image.img_to_array(test_image)
         test_image = numpy.expand_dims(test_image, axis=0)
 
