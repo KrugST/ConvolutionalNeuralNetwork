@@ -13,17 +13,21 @@ cats_dogs_model.summary()
 
 right_answers = 0
 wrong_answers = 0
+img_re_size = (32, 32)
 
-for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction'):
+for (dirpath, dirnames, filenames) in walk('./dataSet/training_set/cats/'):
     for i in range(len(filenames)):
         print(filenames[i])
-        test_image = image.load_img(path='./dataSet/single_prediction/' + filenames[i], target_size=(128, 128))
+        test_image = image.load_img(path='./dataSet/training_set/cats/' + filenames[i], target_size=img_re_size)
+        #test_image = image.load_img(path='./dataSet/training_set/dogs/' + filenames[i], target_size=img_re_size)
         test_image = image.img_to_array(test_image)
         test_image = numpy.expand_dims(test_image, axis=0)
 
-        result = cats_dogs_model.predict(test_image)
+        result = cats_dogs_model.predict(test_image/255.0)
 
-        if result[0][0] == 1:
+        print(result)
+
+        if result[0][0] > 0.5:
             answer = 'dog'
         else:
             answer = 'cat'
@@ -32,7 +36,7 @@ for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction'):
             right_answers += 1
         else:
             wrong_answers += 1
-        print(right_answers)
-        print(wrong_answers)
+        print('right: ' + str(right_answers))
+        print('wrong: ' + str(wrong_answers))
         print('Successes rate: ' + str(100 / (wrong_answers+right_answers) * right_answers))
         print('-------------------------')
