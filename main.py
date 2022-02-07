@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # initialize NN with hidden layers
     cnn = keras.Sequential(
         [
-            layers.Conv2D(activation="relu", filters=32, kernel_size=3, input_shape=[img_re_size, 3]),
+            layers.Conv2D(activation="relu", filters=32, kernel_size=3, input_shape=[img_re_size[0], img_re_size[1], 3]),
             layers.MaxPool2D(pool_size=2, strides=2),
             layers.Conv2D(activation="relu", filters=32, kernel_size=3),
             layers.MaxPool2D(pool_size=2, strides=2),
@@ -41,9 +41,9 @@ if __name__ == '__main__':
             layers.Dense(units=2, activation="sigmoid")
         ]
     )
-
-    cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    cnn.fit(x=training_set, validation_data=test_set, epochs=25)
+        #sparse_categorical_crossentropy
+    cnn.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    cnn.fit(x=training_set, validation_data=test_set, epochs=10)
     cnn.save('./saved_model/cats_dogs')
 
     right_answers = 0
@@ -57,21 +57,22 @@ if __name__ == '__main__':
             test_image = numpy.expand_dims(test_image, axis=0)
 
             result = cnn.predict(test_image/255.0, batch_size=None)
-            print(result)
-            print(result[0])
-            print(result[0][0])
+            print('Cat: ' + "{:.0%}".format(result[0][0]))
+            print('Dog: ' + "{:.0%}".format(result[0][1]))
 
             if result[0][0] > 0.5:
+                answer = 'cat'
+            elif result[0][1] > 0.5:
                 answer = 'dog'
             else:
-                answer = 'cat'
+                answer = 'cant understand'
 
             if answer == filenames[i][0: 3]:
                 right_answers += 1
             else:
                 wrong_answers += 1
-            print(right_answers)
-            print(wrong_answers)
-            print('Successes rate: ' + str(100 / (wrong_answers + right_answers) * right_answers))
             print('-------------------------')
+        print('Right answers: ' + str(right_answers))
+        print('Wrong answers: ' + str(wrong_answers))
+        print('Successes rate: ' + str(100 / (wrong_answers + right_answers) * right_answers))
 
