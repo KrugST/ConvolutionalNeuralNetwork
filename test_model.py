@@ -1,7 +1,4 @@
 from tensorflow import keras
-from keras import layers
-import tensorflow
-from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 import numpy
 from os import walk
@@ -15,6 +12,7 @@ right_answers = 0
 wrong_answers = 0
 img_re_size = (32, 32)
 
+# THIS WILL ONLY PRINT WRONG ANSWERS TO CONSOLE, TO UNDERSTAND WHAT IMAGES ARE NOT RECOGNIZED
 for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction/'):
     for i in range(len(filenames)):
 
