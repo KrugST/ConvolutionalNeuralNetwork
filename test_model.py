@@ -23,9 +23,9 @@ for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction/'):
 
         result = cats_dogs_model.predict(test_image/255.0)
 
-        if result[0][0] > 0.5:
+        if result[0][0] > result[0][1]:
             answer = 'cat'
-        elif result[0][1] > 0.5:
+        elif result[0][0] < result[0][1]:
             answer = 'dog'
         else:
             answer = 'cant understand'

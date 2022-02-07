@@ -60,9 +60,9 @@ if __name__ == '__main__':
             print('Cat: ' + "{:.0%}".format(result[0][0]))
             print('Dog: ' + "{:.0%}".format(result[0][1]))
 
-            if result[0][0] > 0.5:
+            if result[0][0] > result[0][1]:
                 answer = 'cat'
-            elif result[0][1] > 0.5:
+            elif result[0][0] < result[0][1]:
                 answer = 'dog'
             else:
                 answer = 'cant understand'
