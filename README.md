@@ -3,10 +3,7 @@ pip install virtualenv<br>
 python3 -m venv cnn<br>
 . cnn/bin/activate<br>
 <br>
-pip install tensorflow<br>
-pip install numpy<br>
-pip install pillow<br>
-pip install scipy<br>
+pip install tensorflow numpy pillow scipy<br>
 
 Virtual environment: <br>
 python -m venv envNameAnythingYouWant<br>
