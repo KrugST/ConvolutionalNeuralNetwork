@@ -38,7 +38,7 @@ if __name__ == '__main__':
             layers.Conv2D(activation="relu", filters=32, kernel_size=3),
             layers.Flatten(),
             layers.Dense(units=128, activation="relu"),
-            layers.Dense(units=1, activation="sigmoid")
+            layers.Dense(units=2, activation="sigmoid")
         ]
     )
 
