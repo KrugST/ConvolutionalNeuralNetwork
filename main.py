@@ -20,13 +20,13 @@ if __name__ == '__main__':
     training_set = train_datagen.flow_from_directory('./dataSet/training_set',
                                                      target_size=img_re_size,
                                                      batch_size=batch_size,
-                                                     class_mode='binary')
+                                                     class_mode='sparse')
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
     test_set = test_datagen.flow_from_directory('./dataSet/test_set',
                                                 target_size=img_re_size,
                                                 batch_size=batch_size,
-                                                class_mode='binary')
+                                                class_mode='sparse')
 
     # initialize NN with hidden layers
     cnn = keras.Sequential(
@@ -38,7 +38,7 @@ if __name__ == '__main__':
             layers.Conv2D(activation="relu", filters=32, kernel_size=3),
             layers.Flatten(),
             layers.Dense(units=128, activation="relu"),
-            layers.Dense(units=2, activation="sigmoid")
+            layers.Dense(units=3, activation="sigmoid")
         ]
     )
         #sparse_categorical_crossentropy
@@ -59,13 +59,17 @@ if __name__ == '__main__':
             result = cnn.predict(test_image/255.0, batch_size=None)
             print('Cat: ' + "{:.0%}".format(result[0][0]))
             print('Dog: ' + "{:.0%}".format(result[0][1]))
+            print('Elephant: ' + "{:.0%}".format(result[0][2]))
 
-            if result[0][0] > result[0][1]:
+            if result[0][0] == max(result[0]):
                 answer = 'cat'
-            elif result[0][0] < result[0][1]:
+            elif result[0][1] == max(result[0]):
                 answer = 'dog'
+            elif result[0][2] == max(result[0]):
+                answer = 'ele'
             else:
-                answer = 'cant understand'
+                answer = 'none'
+
 
             if answer == filenames[i][0: 3]:
                 right_answers += 1

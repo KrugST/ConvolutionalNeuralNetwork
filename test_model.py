@@ -23,12 +23,14 @@ for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction/'):
 
         result = cats_dogs_model.predict(test_image/255.0)
 
-        if result[0][0] > result[0][1]:
+        if result[0][0] == max(result[0]):
             answer = 'cat'
-        elif result[0][0] < result[0][1]:
+        elif result[0][1] == max(result[0]):
             answer = 'dog'
+        elif result[0][2] == max(result[0]):
+            answer = 'ele'
         else:
-            answer = 'cant understand'
+            answer = 'none'
 
         if answer == filenames[i][0: 3]:
             right_answers += 1
@@ -36,6 +38,7 @@ for (dirpath, dirnames, filenames) in walk('./dataSet/single_prediction/'):
             print(filenames[i])
             print('Cat: ' + "{:.0%}".format(result[0][0]))
             print('Dog: ' + "{:.0%}".format(result[0][1]))
+            print('Elephant: ' + "{:.0%}".format(result[0][2]))
             wrong_answers += 1
             print('-------------------------')
     print('Right answers: ' + str(right_answers))
